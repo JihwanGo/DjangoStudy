@@ -1,0 +1,8 @@
+Steps for creating an app:
+
+1) Python manage.py startapp name
+2) Add the 'name of app' to INSTALLED_APPS in settings.py
+3) Create the models of the app in 'name of app'.models.py
+4) Run 'python manage.py makemigrations'
+5) Run 'python manage.py migrate'
+6) Register the app on the admin.py

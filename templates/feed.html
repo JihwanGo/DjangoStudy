@@ -1,0 +1,40 @@
+{% extends 'base.html' %}{% load humanize %}{%block title%}Feed{%endblock title%} {% block content%}
+<main id="feed">
+    {% for image in images %}
+    <div class="photo">
+        <header class="photo__header">
+            <img src="{{image.author.profile_photo.url}}" class="photo__avatar " />
+            <div class="photo__user-info ">
+                <span class="photo__author ">{{image.author.username}}</span>
+                <span class="photo__location ">{{image.location}}</span>
+            </div>
+        </header>
+        <img src="{{image.file.url}}" />
+        <div class="photo__info ">
+            <div class="photo__actions">
+                <span class="photo__action">
+                        <i data-id="{{image.id}}" class="fa fa-lg feedHeart fa-heart-o"></i>
+                    </span>
+                <span class="photo__action">
+                        <i class="fa fa-comment-o fa-lg"></i>
+                    </span>
+            </div>
+            {% if image.likes.all.count > 0 %}
+            <span class="photo__likes ">{{image.likes.all.count}} like{{image.likes.all.count|pluralize}}</span> {% endif%}
+            <ul class="photo__comments">
+                {% for comment in image.comments.all %}
+                <li class="photo__comment">
+                    <span class="photo__comment-author ">{{comment.user.username}}</span> {{comment.comment}}
+                </li>
+                {% endfor %}
+            </ul>
+            <span class="photo__time-ago ">{{image.date|naturaltime}}</span>
+            <div class="photo__add-comment-container">
+                <textarea data-id="{{image.id}}" name="comment" class="comment-input" placeholder="Add a comment... "></textarea>
+                <i class="fa fa-ellipsis-h "></i>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</main>
+{% endblock content%}

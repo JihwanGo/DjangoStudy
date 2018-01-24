@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {%block title%}Profile{%endblock title%} {% block content%}
+<main id="profile">
+    <header class="profile__header">
+        <div class="profile__column">
+            <img src="{{profile_user.profile_photo.url}}" />
+        </div>
+        <div class="profile__column">
+            <div class="profile__title">
+                <h3 class="profile__username">{{profile_user.username}}</h3>
+                {% if profile_user.id == user.id %}
+                <a href="edit-profile.html">Edit profile</a>
+                <i class="fa fa-cog fa-lg"></i> {% else %}
+                <a href="#">Follow</a> {% endif %}
+            </div>
+            <ul class="profile__stats">
+                <li class="profile__stat">
+                    <span class="stat__number">333</span> posts
+                </li>
+                <li class="profile__stat">
+                    <span class="stat__number">999</span> followers
+                </li>
+                <li class="profile__stat">
+                    <span class="stat__number">36</span> following
+                </li>
+            </ul>
+            <p class="profile__bio">
+                <span class="profile__full-name">
+                        {{profile_user.get_full_name}}
+                    </span> {% if profile_user.bio %}{{profile_user.bio}}{% endif %}
+                <a href="{{profile_user.website}}">{{profile_user.website}}</a>
+            </p>
+        </div>
+    </header>
+    <section class="profile__photos">
+        {% for image in profile_user.images.all %}
+        <div class="profile__photo">
+            <img src="{{image.file.url}}" />
+            <div class="profile__photo-overlay">
+                <span class="overlay__item">
+                        <i class="fa fa-heart"></i>
+                        {{image.likes.all.count}}
+                    </span>
+                <span class="overlay__item">
+                        <i class="fa fa-comment"></i>
+                        {{image.comments.all.count}}
+                    </span>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+</main>
+{% endblock content%}
